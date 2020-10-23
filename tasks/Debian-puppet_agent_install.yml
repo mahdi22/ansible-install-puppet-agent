@@ -1,0 +1,30 @@
+---
+  - name: "Install Repo for Puppet 6"
+    apt:
+       deb: "{{ puppet_release }}"
+        #- python-apt
+       state: present
+    environment: "{{ proxy_env }}"
+    notify: Update cache
+
+  - name: "Install Puppet Agent 6"
+    apt:
+        name: "{{ puppet_packages }}"
+        state: present
+    environment: "{{ proxy_env }}"
+
+  - name: "Get server facter fqdn"
+    command: "hostname -f"
+    changed_when: no
+    register: HostName
+    ignore_errors: yes
+
+  - name: "Copy Puupet Conf file"
+    template: src=puppet.conf.j2 dest=/etc/puppetlabs/puppet/puppet.conf mode=644
+    notify:
+      - Shutdown Puppet agent
+      - Delete puppet Certificat files
+      - Generate puppet CA
+      - Start Puppet agent
+
+        

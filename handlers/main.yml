@@ -1,0 +1,24 @@
+---
+- name: "Shutdown Puppet agent"
+  service:
+    name: puppet
+    state: stopped
+
+- name: "Delete puppet Certificat files"
+  file:
+    path: /etc/puppetlabs/puppet/ssl/
+    state: absent
+
+- name: "Generate puppet CA"
+  command: /opt/puppetlabs/bin/puppet agent -tv
+  ignore_errors: yes
+
+- name: "Start Puppet agent"
+  service:
+    name: puppet
+    state: started
+    enabled: yes
+
+- name: Update cache
+  apt: update_cache=yes force_apt_get=yes
+  environment: "{{ proxy_env }}"

@@ -1,0 +1,26 @@
+---
+- name: "Install Repo for Puppet 6"
+  yum:
+    name: "{{ puppet_release }}"
+    state: present
+    disable_gpg_check: yes
+  environment: "{{ proxy_env }}"
+
+- name: "Install Puppet Agent 6"
+  yum:
+    name: "{{ puppet_packages }}"
+    state: present
+  environment: "{{ proxy_env }}"
+
+- name: "Get server hostname"
+  command: "hostname"
+  changed_when: no
+  register: HostName
+
+- name: "Copy Puupet Conf file"
+  template: src=puppet.conf.j2 dest=/etc/puppetlabs/puppet/puppet.conf mode=644
+  notify:
+    - Shutdown Puppet agent
+    - Delete puppet Certificat files
+    - Generate puppet CA
+    - Start Puppet agent     

@@ -1,0 +1,8 @@
+---
+proxy_env:
+  http_proxy: http://vprodprx503.picard.priv:3128/
+  https_proxy: http://vprodprx503.picard.priv:3128/
+puppet_server_name: vrecfor101.issy.picard.priv
+environnement: production
+runinterval: 30m
+puppet_packages: puppet-agent
