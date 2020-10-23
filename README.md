@@ -5,7 +5,7 @@ An Ansible role for installing and secure agent puppet version 6 in RHEL/CentOS 
 
 - Install puppet 6 official repositories
 - Configuration puppet agent
-- Generate sertification
+- Generate certification
 - Enable puppet service
 - Start puppet service
 
