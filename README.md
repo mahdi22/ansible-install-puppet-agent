@@ -1,4 +1,4 @@
-# Ansible role `mariadb_install`
+# Ansible role `puppet_agent`
 
 
 An Ansible role for installing and secure agent puppet version 6 in RHEL/CentOS (6,7,8) and Debian (9,10) and Ubunut (20.04, 18.04, 16.04) distributions. Specifically, the responsibilities of this role are to:
