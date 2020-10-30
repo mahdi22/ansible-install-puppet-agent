@@ -31,4 +31,5 @@ galaxy_info:
     - ubuntu
     - redhat
     - puppet
+    - system
 dependencies: []
