@@ -1,8 +1,8 @@
 ---
 proxy_env:
-  http_proxy: http://vprodprx503.picard.priv:3128/
-  https_proxy: http://vprodprx503.picard.priv:3128/
-puppet_server_name: vrecfor101.issy.picard.priv
+  http_proxy: http://proxy.lab.local:8080/
+  https_proxy: http://proxy.lab.local:8080/
+puppet_server_name: puppet.lab.local
 environnement: production
 runinterval: 30m
 puppet_packages: puppet-agent
