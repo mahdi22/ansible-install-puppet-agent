@@ -1,3 +1,3 @@
 ---
-puppet_server_name: puppet.lab.local
+puppet_server_name: puppet
 puppet_packages: puppet-agent

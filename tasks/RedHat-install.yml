@@ -1,5 +1,11 @@
 ---
-- name: "Install Repo for Puppet 6"
+- fail:
+    msg:
+      - "puppet agent version {{ puppet_version }} is not valide"
+      - "puppet agent version should be in (6,7)"
+  when: puppet_version not in ('6','7')
+
+- name: "Install Repo for Puppet {{ puppet_version }}"
   yum:
     name: "{{ puppet_release }}"
     state: present
@@ -8,15 +14,18 @@
   when: 
     - use_proxy is defined
     - use_proxy
+    - install_from_puppetlabs
 
-- name: "Install Repo for Puppet 6"
+- name: "Install Repo for Puppet {{ puppet_version }}"
   yum:
     name: "{{ puppet_release }}"
     state: present
     disable_gpg_check: yes
-  when: (use_proxy is not defined) or (not use_proxy)
+  when: 
+    - (use_proxy is not defined) or (not use_proxy)
+    - install_from_puppetlabs
 
-- name: "Install Puppet Agent 6"
+- name: "Install Puppet Agent {{ puppet_version }}"
   yum:
     name: "{{ puppet_packages }}"
     state: present
@@ -25,7 +34,7 @@
     - use_proxy is defined
     - use_proxy
 
-- name: "Install Puppet Agent 6"
+- name: "Install Puppet Agent {{ puppet_version }}"
   yum:
     name: "{{ puppet_packages }}"
     state: present
@@ -40,6 +49,14 @@
   template: src=puppet.conf.j2 dest=/etc/puppetlabs/puppet/puppet.conf mode=644
   notify:
     - Shutdown Puppet agent
+    - Start Puppet agent
+  when: not puppet_agent_certification
+
+- name: "Copy Puupet Conf file"
+  template: src=puppet.conf.j2 dest=/etc/puppetlabs/puppet/puppet.conf mode=644
+  notify:
+    - Shutdown Puppet agent
     - Delete puppet Certificat files
     - Generate puppet CA
-    - Start Puppet agent     
+    - Start Puppet agent
+  when: puppet_agent_certification    

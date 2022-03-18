@@ -1,7 +1,7 @@
 galaxy_info:
   author: Mahdi Bourbita
   role_name: puppet_agent
-  description: Install and configure puppet agent version 6 on Rhel/CentOS, Debian and Ubuntu ditributions
+  description: Install and configure puppet agent (supported puppet version 6 and 7) on Rhel/CentOS, Debian and Ubuntu ditributions
 
   license: MIT
 

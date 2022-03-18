@@ -1,1 +1,1 @@
-puppet_release: "https://apt.puppetlabs.com/puppet6-release-{{ ansible_distribution_release }}.deb"
+puppet_release: "https://apt.puppetlabs.com/puppet{{ puppet_version }}-release-{{ ansible_distribution_release }}.deb"

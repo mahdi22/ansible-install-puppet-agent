@@ -4,9 +4,9 @@
 # Ansible role `puppet_agent`
 
 
-An Ansible role for installing and secure agent puppet version 6 in RHEL/CentOS (6,7,8) and Debian (9,10) and Ubunut (20.04, 18.04, 16.04) distributions. Specifically, the responsibilities of this role are to:
+An Ansible role for installing and secure agent puppet (supported version 6 and 7) in RHEL/CentOS (6,7,8) and Debian (9,10) and Ubunut (20.04, 18.04, 16.04) distributions. Specifically, the responsibilities of this role are to:
 
-- Install puppet 6 official repositories
+- Install puppet from official repositories
 - Configuration puppet agent
 - Generate certification
 - Enable puppet service
@@ -19,15 +19,52 @@ $ ansible-galaxy install mahdi22.puppet_agent
 
 ## Role Variables
 
-### Basic configuration
+This role has multiple variables. The defaults for all these variables are the following:
 
-| Variable                       | Default                       | Comments                                                     |
-| :---                           | :---                          | :---                                                         |
-| `http_proxy     `              | 'http://proxy.local:8080/'    | Set Proxy server and port replace proxy.lab.local:8080       |
-| `https_proxy`                  | 'http://proxy.local:8080/'    | Set Proxy server and port replace proxy.lab.local:8080       |
-| `puppet_server_name`           | puppetserver.lab.local        | Set the puppet server name or ip address                     |
-| `environnement`                | production                    | set the puppet environement (Default production)             |
-| `runinterval`                  | 30m                           | Set puppet run interval (Default 30m)                        |
+```yaml
+---
+# Specify if the role must use a proxy web
+# Default is False
+use_proxy: yes
+
+# If use_proxy: yes, set http proxy variables environment
+# Replace proxy.local with your web proxy adresse or name
+# Replace 8080 with your web proxy port
+proxy_env:
+  http_proxy: http://proxy.local:8080/
+  https_proxy: http://proxy.local:8080/
+
+# Set install_from_puppetlabs: true to install puppetlabs repository.
+# Set install_from_puppetlabs: false to puppet agent from a local repository.
+# Default is true.
+install_from_puppetlabs: true
+
+# Specifie puppet version
+# Supported values are "6" and "7"
+# Default is 6
+puppet_version: "6"
+
+# Generate or Re-generate a new certificat
+# Default is true
+# Turne this variable to false to edit configuration without generate a new certificat
+puppet_agent_certification: true
+
+# The master server to request configurations from.
+# Defaults to puppet
+puppet_server_name: puppet
+
+# The environment to request when contacting the master.
+# Default is production
+environment: production
+
+# How often to do a Puppet run, when running as a service.
+# Default is 30m
+runinterval: 30m
+```
+
+## Dependencies
+
+None
 
 ## Example Playbook
 
@@ -37,6 +74,8 @@ Playbook example to use role without proxy web
   roles:
     - role: mahdi22.puppet_agent
       become: yes
+      vars:
+        puppet_server_name: puppet 
 ```
 Playbook example to use role with proxy web
 ```Yaml
@@ -45,6 +84,7 @@ Playbook example to use role with proxy web
     - role: mahdi22.puppet_agent
       become: yes
       vars:
+        puppet_server_name: puppet
         use_proxy: yes
         proxy_env:
           http_proxy: http://proxy.local:8080/
