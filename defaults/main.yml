@@ -1,1 +1,3 @@
 ---
+environnement: production
+runinterval: 30m
