@@ -23,28 +23,33 @@ $ ansible-galaxy install mahdi22.puppet_agent
 
 | Variable                       | Default                       | Comments                                                     |
 | :---                           | :---                          | :---                                                         |
-| `http_proxy     `              | 'http://proxy.lab.local:8080/'| Set Proxy server and port replace proxy.lab.local:8080       |
-| `https_proxy`                  | 'http://proxy.lab.local:8080/'| Set Proxy server and port replace proxy.lab.local:8080       |
+| `http_proxy     `              | 'http://proxy.local:8080/'    | Set Proxy server and port replace proxy.lab.local:8080       |
+| `https_proxy`                  | 'http://proxy.local:8080/'    | Set Proxy server and port replace proxy.lab.local:8080       |
 | `puppet_server_name`           | puppetserver.lab.local        | Set the puppet server name or ip address                     |
 | `environnement`                | production                    | set the puppet environement (Default production)             |
 | `runinterval`                  | 30m                           | Set puppet run interval (Default 30m)                        |
 
-#### Remarks
-
-(1) Remove the folowing parameters on all install packages tasks if machines have an internet access without proxy server .:
-```yaml
-environment: "{{ proxy_env }}"
-```
-
 ## Example Playbook
 
+Playbook example to use role without proxy web
 ```Yaml
 - hosts: puppet
   roles:
     - role: mahdi22.puppet_agent
       become: yes
 ```
-
+Playbook example to use role with proxy web
+```Yaml
+- hosts: puppet
+  roles:
+    - role: mahdi22.puppet_agent
+      become: yes
+      vars:
+        use_proxy: yes
+        proxy_env:
+          http_proxy: http://proxy.local:8080/
+          https_proxy: http://proxy.local:8080/
+```
 ## Testing
 
 This role is tested on Linux distributions:

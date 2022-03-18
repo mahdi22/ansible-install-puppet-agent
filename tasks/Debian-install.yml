@@ -2,16 +2,34 @@
   - name: "Install Repo for Puppet 6"
     apt:
        deb: "{{ puppet_release }}"
-        #- python-apt
        state: present
     environment: "{{ proxy_env }}"
     notify: Update cache
+    when: 
+    - use_proxy is defined
+    - use_proxy
+
+  - name: "Install Repo for Puppet 6"
+    apt:
+       deb: "{{ puppet_release }}"
+       state: present
+    notify: Update cache
+    when: (use_proxy is not defined) or (not use_proxy)
 
   - name: "Install Puppet Agent 6"
     apt:
         name: "{{ puppet_packages }}"
         state: present
     environment: "{{ proxy_env }}"
+    when: 
+      - use_proxy is defined
+      - use_proxy
+
+  - name: "Install Puppet Agent 6"
+    apt:
+        name: "{{ puppet_packages }}"
+        state: present
+    when: (use_proxy is not defined) or (not use_proxy)
 
   - name: "Get server facter fqdn"
     command: "hostname -f"
