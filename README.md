@@ -1,3 +1,6 @@
+![Ansible](https://img.shields.io/ansible/role/d/51467)
+![Ansible](https://img.shields.io/ansible/quality/51467)
+[![Galaxy](https://img.shields.io/ansible/role/51467)](https://galaxy.ansible.com/mahdi22/puppet_agent)
 # Ansible role `puppet_agent`
 
 
