@@ -34,24 +34,25 @@ proxy_env:
   http_proxy: http://proxy.local:8080/
   https_proxy: http://proxy.local:8080/
 
-# Set install_from_puppetlabs: true to install puppetlabs repository.
-# Set install_from_puppetlabs: false to puppet agent from a local repository.
+# Set install_from_puppetlabs: True - install puppet agent from puppetlabs repository.
+# Set install_from_puppetlabs: False - do not install puppetlabs repositry
 # Default is true.
-install_from_puppetlabs: true
+install_from_puppetlabs: True
 
 # Specifie puppet version
 # Supported values are "6" and "7"
+# This parameter is valid if install_from_puppetlabs: True
 # Default is 6
 puppet_version: "6"
 
 # Generate or Re-generate a new certificat
-# Default is true
 # Turne this variable to false to edit configuration without generate a new certificat
-puppet_agent_certification: true
+# Default is True
+puppet_agent_certification: True
 
 # The master server to request configurations from.
 # Defaults to puppet
-puppet_server_name: puppet
+puppet_server_name: puppet.lab
 
 # The environment to request when contacting the master.
 # Default is production
@@ -68,16 +69,32 @@ None
 
 ## Example Playbook
 
-Playbook example to use role without proxy web
+Playbook example to execute role without proxy web
 ```Yaml
 - hosts: puppet
   roles:
     - role: mahdi22.puppet_agent
       become: yes
       vars:
-        puppet_server_name: puppet 
+        puppet_server_name: puppet.lab
+        puppet_version: "7"
 ```
-Playbook example to use role with proxy web
+Playbook example to execute role with proxy web
+```Yaml
+- hosts: puppet
+  roles:
+    - role: mahdi22.puppet_agent
+      become: yes
+      vars:
+        puppet_server_name: puppet.lab
+        puppet_version: "7"
+        use_proxy: yes
+        proxy_env:
+          http_proxy: http://proxy.local:8080/
+          https_proxy: http://proxy.local:8080/
+```
+
+Playbook example to execute role with proxy web and without using puppetlabs repository 
 ```Yaml
 - hosts: puppet
   roles:
@@ -89,6 +106,7 @@ Playbook example to use role with proxy web
         proxy_env:
           http_proxy: http://proxy.local:8080/
           https_proxy: http://proxy.local:8080/
+        install_from_puppetlabs: False
 ```
 ## Testing
 

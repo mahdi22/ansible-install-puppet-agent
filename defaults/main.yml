@@ -1,6 +1,7 @@
 ---
-install_from_puppetlabs: true
-puppet_agent_certification: true
+install_from_puppetlabs: True
+puppet_agent_certification: True
+puppet_server_name: []
 environnement: production
 runinterval: 30m
 puppet_version: "6"
