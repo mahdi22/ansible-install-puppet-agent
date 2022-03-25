@@ -4,7 +4,7 @@
 # Ansible role `puppet_agent`
 
 
-An Ansible role for installing and secure agent puppet (supported version 6 and 7) in RHEL/CentOS (6,7,8) and Debian (9,10) and Ubunut (20.04, 18.04, 16.04) distributions. Specifically, the responsibilities of this role are to:
+An Ansible role for installing agent puppet (supported version 6 and 7 if install agent from puppetlabs repository, else all version is supported) in RHEL/CentOS, Debian and Ubunut distributions. Specifically, the responsibilities of this role are to:
 
 - Install puppet from official repositories
 - Configuration puppet agent
